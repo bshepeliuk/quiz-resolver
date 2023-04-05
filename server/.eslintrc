@@ -1,0 +1,25 @@
+{
+  "extends": ["standard", "prettier", "prettier/standard"],
+  "plugins": ["import", "prettier", "standard"],
+  "parserOptions": {
+    "ecmaVersion": 12
+  },
+  "env": {
+    "node": true,
+    "es6": true,
+    "jest": true
+  },
+  "rules": {
+    "space-before-function-parent": 0,
+    "new-cap": 0,
+    "prettier/prettier": 2,
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ]
+  }
+}
