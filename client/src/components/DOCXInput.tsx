@@ -1,8 +1,8 @@
-import useRecognizeDocx from "../hooks/useRecognizeDocx";
+import useRecognize from "../hooks/useRecognize";
 import { useStateContext } from "../hooks/useStateContext";
 
 function DOCXInput() {
-  const { recognize } = useRecognizeDocx();
+  const { recognize } = useRecognize("docx");
   const context = useStateContext();
 
   const handleChange = async (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -10,11 +10,9 @@ function DOCXInput() {
 
     if (files === null) return;
 
-    const file = files[0];
+    const content = await recognize(files[0]);
 
-    const content = await recognize(file);
-
-    context.setLines(content);
+    context.setContent(content);
   };
 
   return (

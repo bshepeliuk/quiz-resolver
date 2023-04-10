@@ -13,7 +13,7 @@ function createApp(options = {}) {
 
   app.register(cors);
   app.register(formbody);
-  app.register(multipart);
+  app.register(multipart, { attachFieldsToBody: true });
 
   app.register(txtRoute);
   app.register(pdfRoute);

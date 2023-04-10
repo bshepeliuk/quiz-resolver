@@ -1,38 +1,9 @@
-import { ChangeEvent, useState } from "react";
-import { Image } from "../api/api";
+import { ChangeEvent } from "react";
+import useRecognize from "../hooks/useRecognize";
 import { useStateContext } from "../hooks/useStateContext";
 
-const useRecognizeImage = () => {
-  const [isRecognizing, setIsRecognizing] = useState(false);
-  const [isError, setIsError] = useState(false);
-
-  const recognize = async (file: File): Promise<string[]> => {
-    try {
-      setIsRecognizing(true);
-      setIsError(false);
-
-      const result = await Image.recognize(file);
-
-      setIsRecognizing(false);
-
-      return result.data.content.split("\n").filter(Boolean);
-    } catch (error) {
-      setIsError(true);
-      setIsRecognizing(false);
-    }
-
-    return [];
-  };
-
-  return {
-    recognize,
-    isError,
-    isRecognizing,
-  };
-};
-
 function ImageInput() {
-  const { recognize } = useRecognizeImage();
+  const { recognize } = useRecognize("ocr");
   const context = useStateContext();
 
   const handleChange = async (evt: ChangeEvent<HTMLInputElement>) => {
@@ -40,9 +11,9 @@ function ImageInput() {
 
     if (files === null) return;
 
-    const result = await recognize(files[0]);
+    const content = await recognize(files[0]);
 
-    context.setLines(result);
+    context.setContent(content);
   };
 
   return (

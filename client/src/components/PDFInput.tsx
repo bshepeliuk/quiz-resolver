@@ -1,9 +1,9 @@
 import { ChangeEvent } from "react";
-import useRecognizePdf from "../hooks/useRecognizePdf";
+import useRecognize from "../hooks/useRecognize";
 import { useStateContext } from "../hooks/useStateContext";
 
 function PDFInput() {
-  const { recognize } = useRecognizePdf();
+  const { recognize } = useRecognize("pdf");
   const context = useStateContext();
 
   const handleChange = async (evt: ChangeEvent<HTMLInputElement>) => {
@@ -13,7 +13,7 @@ function PDFInput() {
 
     const content = await recognize(files[0]);
 
-    context.setLines(content);
+    context.setContent(content);
   };
 
   return (

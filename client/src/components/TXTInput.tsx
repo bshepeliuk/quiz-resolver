@@ -1,10 +1,10 @@
 import { ChangeEvent } from "react";
+import useRecognize from "../hooks/useRecognize";
 
-import { useRecognizeTxt } from "../hooks/useRecognizeTxt";
 import { useStateContext } from "../hooks/useStateContext";
 
 function TXTInput() {
-  const { recognize } = useRecognizeTxt();
+  const { recognize } = useRecognize("txt");
   const context = useStateContext();
 
   const handleChange = async (evt: ChangeEvent<HTMLInputElement>) => {
@@ -12,10 +12,9 @@ function TXTInput() {
 
     if (files === null || files[0].type !== "text/plain") return;
 
-    const file = files[0];
-    const content = await recognize(file);
+    const content = await recognize(files[0]);
 
-    context.setLines(content);
+    context.setContent(content);
   };
 
   return (

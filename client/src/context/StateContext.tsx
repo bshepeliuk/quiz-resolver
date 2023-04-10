@@ -1,9 +1,16 @@
 import { createContext, ReactNode, useState } from "react";
 
+export interface IContent {
+  id: string;
+  items: string[];
+}
+
 interface IStateContext {
-  lines: string[];
+  lines: IContent[];
   hasLines: boolean;
-  setLines: React.Dispatch<React.SetStateAction<string[]>>;
+  content: IContent | null;
+  setContent: React.Dispatch<React.SetStateAction<IContent | null>>;
+  setLines: React.Dispatch<React.SetStateAction<IContent[]>>;
 }
 
 export const StateContext = createContext<IStateContext | undefined>(undefined);
@@ -13,9 +20,12 @@ interface IProps {
 }
 
 export function StateProvider({ children }: IProps) {
-  const [lines, setLines] = useState<string[]>([]);
+  const [lines, setLines] = useState<any>([]);
+  const [content, setContent] = useState<IContent | null>(null);
 
   const hasLines = lines.length > 0;
 
-  return <StateContext.Provider value={{ lines, setLines, hasLines }}>{children}</StateContext.Provider>;
+  return (
+    <StateContext.Provider value={{ lines, setLines, hasLines, content, setContent }}>{children}</StateContext.Provider>
+  );
 }

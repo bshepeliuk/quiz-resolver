@@ -49,3 +49,9 @@ export const Image = {
     return api.post('/ocr', formData);
   },
 };
+
+export const Quiz = {
+  resolve(quiz: string) {
+    return api.post('/resolve', { quiz });
+  },
+};
