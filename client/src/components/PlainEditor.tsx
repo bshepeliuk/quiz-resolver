@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import axios from "axios";
 import { createEditor, Descendant, Node } from "slate";
 import { Editable, Slate, withReact } from "slate-react";
 import { withHistory } from "slate-history";
@@ -29,7 +28,8 @@ function PlainEditor() {
   const context = useStateContext();
   const { resolve } = useResolveQuiz();
   const editor = useMemo(() => withHistory(withReact(createEditor())), []);
-
+  // TODO: refactoring;
+  if (context.isRecognizing) return <div>Recognizing...</div>;
   if (context.content === null) return <div>No file selected.</div>;
 
   const items: DescendantType[] = context.content.items.map((item) => ({

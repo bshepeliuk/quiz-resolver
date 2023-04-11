@@ -14,14 +14,6 @@ button:hover {
   cursor: pointer;
 }
 
-.hidden-input {
-  display: none;
-}
-
-input[type="file"] + label:hover {
-  cursor: pointer;
-}
-
 .container {
   max-width: 1200px;
   margin: 0 auto;

@@ -6,11 +6,10 @@ export interface IContent {
 }
 
 interface IStateContext {
-  lines: IContent[];
-  hasLines: boolean;
   content: IContent | null;
+  isRecognizing: boolean;
+  setIsRecognizing: React.Dispatch<React.SetStateAction<boolean>>;
   setContent: React.Dispatch<React.SetStateAction<IContent | null>>;
-  setLines: React.Dispatch<React.SetStateAction<IContent[]>>;
 }
 
 export const StateContext = createContext<IStateContext | undefined>(undefined);
@@ -20,12 +19,12 @@ interface IProps {
 }
 
 export function StateProvider({ children }: IProps) {
-  const [lines, setLines] = useState<any>([]);
   const [content, setContent] = useState<IContent | null>(null);
-
-  const hasLines = lines.length > 0;
+  const [isRecognizing, setIsRecognizing] = useState(false);
 
   return (
-    <StateContext.Provider value={{ lines, setLines, hasLines, content, setContent }}>{children}</StateContext.Provider>
+    <StateContext.Provider value={{ content, setContent, isRecognizing, setIsRecognizing }}>
+      {children}
+    </StateContext.Provider>
   );
 }
