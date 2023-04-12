@@ -19,20 +19,6 @@ button:hover {
   margin: 0 auto;
 }
 
-.header {
-  margin-bottom: 20px;
-  height: 70px;
-  background-color: #34495e;
-  color: #fff;
-}
-
-.header-content-wrapper {
-  display: flex;
-  align-items: center;
-  height: 70px;
-  gap: 20px;
-}
-
 .logo {
   font-weight: bold;
 }

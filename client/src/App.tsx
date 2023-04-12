@@ -1,7 +1,8 @@
 import { SnackbarProvider } from "notistack";
 import { StateProvider } from "./context/StateContext";
 import PlainEditor from "./components/PlainEditor";
-import FileInput from "./components/FileInput/FileInput";
+import { LanguageProvider } from "./context/LanguageContext";
+import HeaderView from "./components/Header/HeaderView";
 
 // TODO: languages switcher;
 // TODO: file types validation;
@@ -10,20 +11,15 @@ import FileInput from "./components/FileInput/FileInput";
 function App() {
   return (
     <SnackbarProvider maxSnack={3} anchorOrigin={{ horizontal: "right", vertical: "bottom" }}>
-      <StateProvider>
-        <header className="header">
-          <div className="container">
-            <div className="header-content-wrapper">
-              <span className="logo">Quiz resolver</span>
-              <FileInput />
-            </div>
-          </div>
-        </header>
+      <LanguageProvider>
+        <StateProvider>
+          <HeaderView />
 
-        <main className="container">
-          <PlainEditor />
-        </main>
-      </StateProvider>
+          <main className="container">
+            <PlainEditor />
+          </main>
+        </StateProvider>
+      </LanguageProvider>
     </SnackbarProvider>
   );
 }

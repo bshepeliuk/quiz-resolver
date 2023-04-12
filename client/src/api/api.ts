@@ -1,52 +1,24 @@
-import axios from 'axios';
-
-const BASE_URL = 'http://localhost:3000/api';
-
-const createApiInstance = (baseURL: string) => {
-  return axios.create({
-    baseURL,
-  });
-};
+import { BASE_URL } from '../constants';
+import { LanguagesType } from '../context/LanguageContext';
+import { RecognitionFileType } from '../hooks/useRecognize';
+import { createApiInstance } from '../utils/createApiInstance';
 
 const api = createApiInstance(BASE_URL);
 
-export const Txt = {
-  recognize(file: File) {
+interface IRecognizeParams {
+  file: File;
+  language: LanguagesType;
+  type: RecognitionFileType;
+}
+
+export const File = {
+  recognize({ file, language, type }: IRecognizeParams) {
     const formData = new FormData();
 
     formData.append('file', file);
+    formData.append('language', language);
 
-    return api.post('/txt', formData);
-  },
-};
-
-export const Pdf = {
-  recognize(file: File) {
-    const formData = new FormData();
-
-    formData.append('file', file);
-
-    return api.post('/pdf', formData);
-  },
-};
-
-export const Docx = {
-  recognize(file: File) {
-    const formData = new FormData();
-
-    formData.append('file', file);
-
-    return api.post('/docx', formData);
-  },
-};
-
-export const Image = {
-  recognize(file: File) {
-    const formData = new FormData();
-
-    formData.append('file', file);
-
-    return api.post('/ocr', formData);
+    return api.post(`/${type}`, formData);
   },
 };
 

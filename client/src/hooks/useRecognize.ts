@@ -1,12 +1,11 @@
-import { AxiosResponse } from 'axios';
 import { useState } from 'react';
 import * as Api from '../api/api';
+import { LanguagesType } from '../context/LanguageContext';
 import { IContent } from '../context/StateContext';
 import { isError } from '../utils/isError';
 import useNotifications from './useNotifications';
 
 export type RecognitionFileType = 'txt' | 'ocr' | 'pdf' | 'docx';
-type RecognitionMethod = (file: File) => Promise<AxiosResponse<IContent>>;
 
 type DocumentFileType =
   | 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
@@ -15,12 +14,17 @@ type DocumentFileType =
   | 'image/png'
   | 'image/jpeg';
 
-const recognition: Record<DocumentFileType, RecognitionMethod> = {
-  'text/plain': Api.Txt.recognize,
-  'application/pdf': Api.Pdf.recognize,
-  'image/png': Api.Image.recognize,
-  'image/jpeg': Api.Image.recognize,
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.document': Api.Docx.recognize,
+interface IRecognizeParams {
+  file: File;
+  language: LanguagesType;
+}
+
+const recognition: Record<DocumentFileType, RecognitionFileType> = {
+  'text/plain': 'txt',
+  'application/pdf': 'pdf',
+  'image/png': 'ocr',
+  'image/jpeg': 'ocr',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
 };
 
 const useRecognize = () => {
@@ -28,7 +32,7 @@ const useRecognize = () => {
   const [hasError, setHasError] = useState(false);
   const notifications = useNotifications();
 
-  const recognize = async (file: File): Promise<IContent | null> => {
+  const recognize = async ({ file, language }: IRecognizeParams): Promise<IContent | null> => {
     try {
       setIsRecognizing(true);
       setHasError(false);
@@ -37,7 +41,9 @@ const useRecognize = () => {
         throw Error('Unsupported type!');
       }
 
-      const result = await recognition[file.type as DocumentFileType](file);
+      const type = recognition[file.type as DocumentFileType];
+
+      const result = await Api.File.recognize({ file, language, type });
 
       setIsRecognizing(false);
 

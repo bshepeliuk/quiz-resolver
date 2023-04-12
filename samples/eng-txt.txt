@@ -1,0 +1,14 @@
+1. What is the output of the following code? console.log(typeof NaN);
+
+a. number
+b. NaN
+c. undefined
+
+
+2. What is an IIFE in JavaScript?
+
+a. A function that is immediately invoked
+b. A method used to create objects
+c. A keyword used to declare variables
+
+
