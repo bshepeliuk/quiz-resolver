@@ -22,3 +22,7 @@ button:hover {
 .logo {
   font-weight: bold;
 }
+
+.main {
+  padding: 50px 0;
+}

@@ -7,18 +7,23 @@ const api = createApiInstance(BASE_URL);
 
 interface IRecognizeParams {
   file: File;
-  language: LanguagesType;
+  languages: LanguagesType[];
   type: RecognitionFileType;
 }
 
 export const File = {
-  recognize({ file, language, type }: IRecognizeParams) {
+  recognize({ file, languages, type }: IRecognizeParams) {
     const formData = new FormData();
 
     formData.append('file', file);
-    formData.append('language', language);
 
-    return api.post(`/${type}`, formData);
+    const params = new URLSearchParams();
+
+    languages.forEach((language) => {
+      params.append('language', language);
+    });
+
+    return api.post(`/${type}`, formData, { params });
   },
 };
 

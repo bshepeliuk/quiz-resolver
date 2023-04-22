@@ -6,6 +6,7 @@ export const Input = styled.input`
 
 export const Label = styled.label`
   &:hover {
+    color: #1abc9c;
     cursor: pointer;
   }
 `;

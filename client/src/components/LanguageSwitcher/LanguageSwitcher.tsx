@@ -2,7 +2,12 @@ import { LanguagesType } from "../../context/LanguageContext";
 import { useLanguageContext } from "../../hooks/useLanguageContext";
 import { LanguageButton, List } from "./languageSwitcher.styled";
 
-const languages: Array<{ label: string; value: LanguagesType }> = [
+interface ILanguage {
+  label: string;
+  value: LanguagesType;
+}
+
+const languages: Array<ILanguage> = [
   { label: "ENG", value: "eng" },
   { label: "UA", value: "ukr" },
 ];
@@ -11,7 +16,7 @@ function LanguageSwitcher() {
   const context = useLanguageContext();
 
   const handleClick = (value: LanguagesType) => {
-    context.setLanguage(value);
+    context.toggleLanguages(value);
   };
 
   return (
@@ -21,7 +26,7 @@ function LanguageSwitcher() {
           <LanguageButton
             type="button"
             onClick={() => handleClick(language.value)}
-            isActive={language.value === context.language}
+            isActive={context.languages.includes(language.value)}
           >
             {language.label}
           </LanguageButton>

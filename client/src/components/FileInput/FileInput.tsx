@@ -5,7 +5,7 @@ import { Input, Label } from "./fileInput.styled";
 
 function FileInput() {
   const { recognize } = useRecognize();
-  const { language } = useLanguageContext();
+  const { languages } = useLanguageContext();
   const context = useStateContext();
 
   const handleChange = async (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,7 +15,7 @@ function FileInput() {
 
     context.setIsRecognizing(true);
 
-    const content = await recognize({ language, file: files[0] });
+    const content = await recognize({ languages, file: files[0] });
 
     context.setIsRecognizing(false);
     context.setContent(content);
@@ -24,7 +24,7 @@ function FileInput() {
   return (
     <div>
       <Input type="file" id="file" onChange={handleChange} />
-      <Label htmlFor="file">File</Label>
+      <Label htmlFor="file">Select File</Label>
     </div>
   );
 }

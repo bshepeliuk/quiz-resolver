@@ -16,7 +16,7 @@ type DocumentFileType =
 
 interface IRecognizeParams {
   file: File;
-  language: LanguagesType;
+  languages: LanguagesType[];
 }
 
 const recognition: Record<DocumentFileType, RecognitionFileType> = {
@@ -32,7 +32,7 @@ const useRecognize = () => {
   const [hasError, setHasError] = useState(false);
   const notifications = useNotifications();
 
-  const recognize = async ({ file, language }: IRecognizeParams): Promise<IContent | null> => {
+  const recognize = async ({ file, languages }: IRecognizeParams): Promise<IContent | null> => {
     try {
       setIsRecognizing(true);
       setHasError(false);
@@ -43,13 +43,15 @@ const useRecognize = () => {
 
       const type = recognition[file.type as DocumentFileType];
 
-      const result = await Api.File.recognize({ file, language, type });
+      const result = await Api.File.recognize({ file, languages, type });
 
       setIsRecognizing(false);
 
       return result.data;
     } catch (error) {
-      if (isError(error)) notifications.error(error.message);
+      if (isError(error)) {
+        notifications.error(error.message);
+      }
 
       setHasError(true);
       setIsRecognizing(false);

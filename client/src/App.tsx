@@ -1,12 +1,10 @@
 import { SnackbarProvider } from "notistack";
+
 import { StateProvider } from "./context/StateContext";
-import PlainEditor from "./components/PlainEditor";
+import QuestionsEditor from "./components/QuestionsEditor";
 import { LanguageProvider } from "./context/LanguageContext";
 import HeaderView from "./components/Header/HeaderView";
-
-// TODO: languages switcher;
-// TODO: file types validation;
-// FIXME: support SVG for Tesseract; convert SVG to PNG;
+import AnswersEditor from "./components/AnswersEditor";
 
 function App() {
   return (
@@ -15,8 +13,11 @@ function App() {
         <StateProvider>
           <HeaderView />
 
-          <main className="container">
-            <PlainEditor />
+          <main className="container main">
+            <h1>Questions</h1>
+            <QuestionsEditor />
+            <h1>Answers</h1>
+            <AnswersEditor />
           </main>
         </StateProvider>
       </LanguageProvider>

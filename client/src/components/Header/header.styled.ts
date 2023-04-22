@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 
 export const Header = styled.header`
-  margin-bottom: 20px;
   height: 70px;
   background-color: #34495e;
   color: #fff;
@@ -11,7 +10,7 @@ export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   height: 70px;
-  gap: 20px;
+  gap: 50px;
 `;
 
 export const LeftContainer = styled.div``;

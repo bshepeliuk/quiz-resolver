@@ -18,6 +18,7 @@ const useNotifications = () => {
   return {
     success,
     error,
+    info,
   };
 };
 
